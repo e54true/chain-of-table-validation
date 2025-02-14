@@ -533,6 +533,8 @@ def dynamic_chain_exec_one_sample(
     dynamic_chain_log = []
 
     current_sample = copy.deepcopy(sample)
+
+    previous_operation = None
     
     while True:
         # move table_info at first 
@@ -548,12 +550,9 @@ def dynamic_chain_exec_one_sample(
             op_name=None,
         )
 
-        #print(next_operation)
         
-        # validate whether the operation is true
         
         if validation_llm:
-            #print("Validation LLM is running...")
             validation_prompt = f"""
             Here is the current table state:
             {table2string(table_info["table_text"])}
@@ -582,8 +581,7 @@ def dynamic_chain_exec_one_sample(
                 )
                 print(next_operation)
 
-                #op_name = operation_parameter_dict[next_operation][0]
-
+        previous_operation = next_operation
 
         dynamic_chain_log.append(log)
 
