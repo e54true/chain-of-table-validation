@@ -18,6 +18,7 @@ import os
 
 from utils.load_data import load_tabfact_dataset
 from utils.llm import ChatGPT
+from utils.llm import ChatGPT_validation
 from utils.helper import *
 from utils.evaluate import *
 from utils.chain import *
@@ -27,9 +28,9 @@ from operations import *
 def main(
     dataset_path: str = "data/tabfact/test.jsonl",
     raw2clean_path: str = "data/tabfact/raw2clean.jsonl",
-    model_name: str = "gpt-3.5-turbo",
+    model_name: str = "gpt-4o",
     # validation model name
-    validation_model_name: str = "gpt-3.5-turbo",
+    validation_model_name: str = "gpt-4o",
     result_dir: str = "results/tabfact",
     openai_api_key: str = None,
     first_n=-1,
@@ -42,7 +43,7 @@ def main(
         key=os.environ["OPENAI_API_KEY"] if openai_api_key is None else openai_api_key,
     )
     # validation model information
-    validate_gpt_llm = ChatGPT(
+    validate_gpt_llm = ChatGPT_validation(
         model_name=validation_model_name,
         key=os.environ["OPENAI_API_KEY"] if openai_api_key is None else openai_api_key,
     )
